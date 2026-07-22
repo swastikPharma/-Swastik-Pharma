@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Your Cart</h2>
+
+{% if order_placed %}
+    <div class="order-success">
+        <p>✅ Your order has been recorded! Click below to confirm via WhatsApp.</p>
+        <a href="{{ wa_link }}" target="_blank" class="btn-primary whatsapp-btn">📲 Send Order on WhatsApp</a>
+    </div>
+{% else %}
+    {% if items %}
+    <table class="cart-table">
+        <tr><th>Product</th><th>MRP</th><th>Qty</th><th>Subtotal</th><th>Action</th></tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }} ({{ item.product.brand }})</td>
+            <td>₹{{ item.product.mrp }}</td>
+            <td>
+                <a href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}">➖</a>
+                {{ item.qty }}
+                <a href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}">➕</a>
+            </td>
+            <td>₹{{ item.subtotal }}</td>
+            <td><a href="{{ url_for('update_cart', product_id=item.product.id, action='remove') }}">❌</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Total: ₹{{ total_mrp }}</h3>
+    <a href="{{ url_for('checkout') }}" class="btn-primary">Place Order</a>
+    {% else %}
+    <p>Your cart is empty. <a href="{{ url_for('products') }}">Browse products</a></p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

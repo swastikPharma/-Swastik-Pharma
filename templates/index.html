@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+    <h1>Welcome to SWASTIK PHARMA</h1>
+    <p>Your Trusted Generic Medicine Distributor & Wholesaler</p>
+    <a href="{{ url_for('products') }}" class="btn-primary">Browse Products</a>
+</section>
+
+<section class="home-section">
+    <h2>🆕 New Launches</h2>
+    <div class="product-grid">
+        {% for p in new_launches %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p.name }}">
+            <h4>{{ p.name }}</h4>
+            <p>{{ p.salt }}</p>
+            <p class="price">MRP: ₹{{ p.mrp }}</p>
+        </div>
+        {% else %}
+        <p>No new launches at the moment.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="home-section">
+    <h2>🔥 Top Selling Products</h2>
+    <div class="product-grid">
+        {% for p in top_selling %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p.name }}">
+            <h4>{{ p.name }}</h4>
+            <p>{{ p.salt }}</p>
+            <p class="price">MRP: ₹{{ p.mrp }}</p>
+        </div>
+        {% else %}
+        <p>No top selling products marked yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="home-section">
+    <h2>🎁 Current Offers & Schemes</h2>
+    <div class="product-grid">
+        {% for p in offers %}
+        <div class="product-card offer-card">
+            <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p.name }}">
+            <h4>{{ p.name }}</h4>
+            <p class="offer-text">{{ p.offer_text }}</p>
+        </div>
+        {% else %}
+        <p>No offers running currently.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

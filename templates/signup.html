@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-box">
+<h2>Create Your Retailer Account</h2>
+<form method="POST">
+    <input type="text" name="shop_name" placeholder="Shop Name" required>
+    <input type="text" name="dl_number" placeholder="DL Number" required>
+    <input type="text" name="mobile" placeholder="Mobile Number" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <textarea name="address" placeholder="Full Shop Address" required></textarea>
+    <input type="password" name="password" placeholder="Set Password" required>
+    <button type="submit" class="btn-primary">Sign Up</button>
+</form>
+<p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+{% endblock %}

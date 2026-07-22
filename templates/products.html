@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Our Products</h2>
+
+<form method="GET" class="search-bar">
+    <input type="text" name="q" placeholder="Search by name, brand, salt/formula..." value="{{ query }}">
+    <select name="category">
+        <option value="All">All Categories</option>
+        {% for c in categories %}
+            <option value="{{ c }}" {% if c == selected_category %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn-primary">Search</button>
+</form>
+
+<div class="product-grid">
+    {% for p in products %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p.name }}">
+        <h4>{{ p.name }}</h4>
+        <p class="salt">{{ p.salt }}</p>
+        <p class="brand">Brand: {{ p.brand }}</p>
+        <p class="price">MRP: ₹{{ p.mrp }} | PTR: ₹{{ p.ptr }}</p>
+        <a href="{{ url_for('add_to_cart', product_id=p.id) }}" class="btn-primary">Add to Cart</a>
+    </div>
+    {% else %}
+    <p>No products found.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWASTIK PHARMA</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="business-info">
+        <strong>{{ business.name }}</strong> | {{ business.address }} <br>
+        📞 {{ business.mobile1 }} / {{ business.mobile2 }} | ✉ {{ business.email }} <br>
+        DL No: {{ business.dl_no }} | GSTIN: {{ business.gstin }} | Food Lic: {{ business.food_licence }}
+    </div>
+</div>
+
+<header class="navbar">
+    <div class="logo">
+        <span class="logo-swa">SWA</span><span class="logo-stik">STIK</span>
+        <div class="logo-sub">PHARMA</div>
+    </div>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('view_cart') }}">Cart</a>
+        {% if session.get('customer_id') %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+        {% endif %}
+    </nav>
+    <div class="admin-corner">
+        {% if session.get('is_admin') %}
+            <a href="{{ url_for('admin_dashboard') }}" class="admin-btn">Admin Dashboard</a>
+            <a href="{{ url_for('admin_logout') }}" class="admin-btn">Logout</a>
+        {% else %}
+            <a href="{{ url_for('admin_login') }}" class="admin-btn">Admin Login</a>
+        {% endif %}
+    </div>
+</header>
+
+<div class="flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+</div>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<a href="https://wa.me/{{ whatsapp or '919171406630' }}" class="whatsapp-float" target="_blank">
+    💬 WhatsApp Us
+</a>
+
+<footer>
+    &copy; {{ business.name }} — All Rights Reserved.
+</footer>
+
+</body>
+</html>

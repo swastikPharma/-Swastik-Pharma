@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Product</h2>
+<form method="POST" enctype="multipart/form-data" class="admin-form">
+    <input type="text" name="name" value="{{ product.name }}" required>
+    <input type="text" name="salt" value="{{ product.salt }}" required>
+    <input type="text" name="brand" value="{{ product.brand }}" required>
+    <select name="category" required>
+        {% for c in categories %}
+        <option value="{{ c }}" {% if c == product.category %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" step="0.01" name="mrp" value="{{ product.mrp }}" required>
+    <input type="number" step="0.01" name="ptr" value="{{ product.ptr }}" required>
+    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" width="80"><br>
+    <input type="file" name="image">
+    <label><input type="checkbox" name="is_new" {% if product.is_new %}checked{% endif %}> New Launch</label>
+    <label><input type="checkbox" name="is_top" {% if product.is_top %}checked{% endif %}> Top Selling</label>
+    <label><input type="checkbox" name="is_offer" {% if product.is_offer %}checked{% endif %}> Offer/Scheme</label>
+    <input type="text" name="offer_text" value="{{ product.offer_text }}" placeholder="Offer Text">
+    <button type="submit" class="btn-primary">Update Product</button>
+</form>
+{% endblock %}

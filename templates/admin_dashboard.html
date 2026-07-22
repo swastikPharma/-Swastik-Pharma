@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <h3>{{ total_orders }}</h3>
+        <p>Total Orders</p>
+    </div>
+</div>
+
+<a href="{{ url_for('admin_add_product') }}" class="btn-primary">+ Add New Product</a>
+
+<h3>Manage Products</h3>
+<table class="cart-table">
+<tr><th>Image</th><th>Name</th><th>Brand</th><th>MRP</th><th>PTR</th><th>Category</th><th>Actions</th></tr>
+{% for p in products %}
+<tr>
+    <td><img src="{{ url_for('static', filename='uploads/' + p.image) }}" width="50"></td>
+    <td>{{ p.name }}</td>
+    <td>{{ p.brand }}</td>
+    <td>₹{{ p.mrp }}</td>
+    <td>₹{{ p.ptr }}</td>
+    <td>{{ p.category }}</td>
+    <td>
+        <a href="{{ url_for('admin_edit_product', product_id=p.id) }}">✏ Edit</a> |
+        <a href="{{ url_for('admin_delete_product', product_id=p.id) }}">🗑 Delete</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Recent Orders</h3>
+<table class="cart-table">
+<tr><th>Order ID</th><th>Items</th><th>Date</th></tr>
+{% for o in orders %}
+<tr>
+    <td>#{{ o.id }}</td>
+    <td><pre>{{ o.items_summary }}</pre></td>
+    <td>{{ o.created_at }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
