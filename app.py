@@ -343,9 +343,10 @@ def admin_delete_product(product_id):
     flash("Product deleted", "success")
     return redirect(url_for('admin_dashboard'))
 
-# ---------------- INIT ----------------
+# ------------------- INIT -------------------
+with app.app_context():
+    db.create_all()
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     app.run(debug=False)
